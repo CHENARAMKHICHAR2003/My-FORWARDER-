@@ -9,7 +9,7 @@ from database import Db, db
 from config import Config, temp
 from script import Script
 from pyrogram import Client, filters
-PAID_USERS = [123456789]
+PAID_USERS = [8183010692]
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaDocument
 import psutil
 import time as time
