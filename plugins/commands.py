@@ -284,4 +284,15 @@ async def verify(client, message):
 
     await message.reply_text("User activated ✅")
 
+@Client.on_message(filters.command("save") & (filters.group | filters.supergroup))
+async def save_group(client, message):
+    user_id = message.from_user.id
+    chat_id = message.chat.id
+    title = message.chat.title
+
+    await db.add_channel(user_id, chat_id, title)
+
+    await message.reply_text(
+        f"✅ Group Saved in Database\n\n📂 {title}\n🆔 `{chat_id}`"
+    )
 
