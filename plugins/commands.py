@@ -212,3 +212,14 @@ async def add_paid(client, message):
         await message.reply_text(f"{user_id} added in paid users ✅")
     except Exception:
         await message.reply_text("Usage: /addpaid user_id")
+
+@Client.on_message(filters.command("plans"))
+async def plans(client, message):
+    buttons = [
+        [InlineKeyboardButton("15 Days ₹199", callback_data="pay_15")],
+        [InlineKeyboardButton("30 Days ₹300", callback_data="pay_30")]
+    ]
+    await message.reply_text(
+        "Choose your premium plan 💎",
+        reply_markup=InlineKeyboardMarkup(buttons)
+    )
