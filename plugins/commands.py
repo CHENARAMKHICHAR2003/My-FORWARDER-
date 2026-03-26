@@ -14,6 +14,10 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMedi
 import psutil
 import time as time
 from os import environ, execle, system
+import razorpay
+from config import Config
+from db import add_paid_user
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 START_TIME = time.time()
 
