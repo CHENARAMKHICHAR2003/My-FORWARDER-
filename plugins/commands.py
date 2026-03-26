@@ -16,7 +16,7 @@ import time as time
 from os import environ, execle, system
 import razorpay
 from config import Config
-from db import add_paid_user
+from .db import add_paid_user
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 client_pay = razorpay.Client(auth=(Config.RAZORPAY_KEY_ID, Config.RAZORPAY_KEY_SECRET))
 
@@ -73,17 +73,45 @@ async def restart(client, message):
 
 @Client.on_callback_query(filters.regex(r'^help'))
 async def helpcb(bot, query):
-    buttons = [[
-        InlineKeyboardButton('🤔 ʜᴏᴡ ᴛᴏ ᴜsᴇ ᴍᴇ ❓', callback_data='how_to_use')
-    ],[
-        InlineKeyboardButton('Aʙᴏᴜᴛ ✨️', callback_data='about'),
-        InlineKeyboardButton('⚙ Sᴇᴛᴛɪɴɢs', callback_data='settings#main')
-    ],[
-        InlineKeyboardButton('• back', callback_data='back')
-    ]]
-    reply_markup = InlineKeyboardMarkup(buttons)
-    await query.message.edit_text(text=Script.HELP_TXT, reply_markup=reply_markup)
+    buttons = [
+        [InlineKeyboardButton('🤔 ʜᴏᴡ ᴛᴏ ᴜsᴇ ᴍᴇ ❓', callback_data='how_to_use')],
+        [InlineKeyboardButton('🚀 Forward Help', callback_data='forward_help')],
+        [InlineKeyboardButton('💎 Premium Help', callback_data='premium_help')],
+        [InlineKeyboardButton('📂 Group Save Help', callback_data='group_help')],
+        [
+            InlineKeyboardButton('Aʙᴏᴜᴛ ✨️', callback_data='about'),
+            InlineKeyboardButton('⚙ Sᴇᴛᴛɪɴɢs', callback_data='settings#main')
+        ],
+        [InlineKeyboardButton('• back', callback_data='back')]
+    ]
 
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    await query.message.edit_text(
+        text=Script.HELP_TXT,
+        reply_markup=reply_markup
+    )
+
+@Client.on_callback_query(filters.regex("forward_help"))
+async def forward_help(client, query):
+    await query.message.edit_text(
+        "🚀 Forward Commands\n\n/forward\n/cancel",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("• back", callback_data="help")]])
+    )
+
+@Client.on_callback_query(filters.regex("premium_help"))
+async def premium_help(client, query):
+    await query.message.edit_text(
+        "💎 Premium Commands\n\n/addpaid user_id\n/plans\n/verify user_id days",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("• back", callback_data="help")]])
+    )
+
+@Client.on_callback_query(filters.regex("group_help"))
+async def group_help(client, query):
+    await query.message.edit_text(
+        "📂 Group Save Command\n\n/save",
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("• back", callback_data="help")]])
+    )
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
 # Ask Doubt on telegram @KingVJ01
