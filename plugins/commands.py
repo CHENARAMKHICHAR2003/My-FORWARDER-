@@ -224,7 +224,7 @@ async def plans(client, message):
         reply_markup=InlineKeyboardMarkup(buttons)
     )
 
-@Client.on_callback_query()
+@Client.on_callback_query(filters.regex(r"^pay_"))
 async def payment_callback(client, query):
     if query.data == "pay_15":
         amount = 19900
