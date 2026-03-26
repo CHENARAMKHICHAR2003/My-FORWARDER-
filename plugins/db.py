@@ -59,3 +59,15 @@ async def connect_user_db(user_id, uri, chat):
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
 # Ask Doubt on telegram @KingVJ01
+from datetime import datetime, timedelta
+
+paid_users = {}
+
+def add_paid_user(user_id, days):
+    expiry = datetime.now() + timedelta(days=days)
+    paid_users[user_id] = expiry
+
+def is_paid_user(user_id):
+    if user_id in paid_users:
+        return paid_users[user_id] > datetime.now()
+    return False
