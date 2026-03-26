@@ -18,6 +18,7 @@ import razorpay
 from config import Config
 from db import add_paid_user
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+client_pay = razorpay.Client(auth=(Config.RAZORPAY_KEY_ID, Config.RAZORPAY_KEY_SECRET))
 
 START_TIME = time.time()
 
