@@ -223,3 +223,35 @@ async def plans(client, message):
         "Choose your premium plan 💎",
         reply_markup=InlineKeyboardMarkup(buttons)
     )
+
+@Client.on_callback_query()
+async def payment_callback(client, query):
+    if query.data == "pay_15":
+        amount = 19900
+    elif query.data == "pay_30":
+        amount = 30000
+    else:
+        return
+
+    order = client_pay.order.create({
+        "amount": amount,
+        "currency": "INR",
+        "payment_capture": 1
+    })
+
+    payment_link = f"https://rzp.io/l/{order['id']}"
+
+    await query.message.reply_text(
+        f"Pay here 💳\n{payment_link}"
+    )
+
+@Client.on_message(filters.command("verify"))
+async def verify(client, message):
+    user_id = int(message.command[1])
+    days = int(message.command[2])
+
+    add_paid_user(user_id, days)
+
+    await message.reply_text("User activated ✅")
+
+
