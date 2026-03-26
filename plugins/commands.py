@@ -239,12 +239,14 @@ async def payment_callback(client, query):
         "payment_capture": 1
     })
 
-    payment_link = f"https://rzp.io/l/{order['id']}"
+    pay_text = f"""
+Pay here 💳
 
-    await query.message.reply_text(
-        f"Pay here 💳\n{payment_link}"
-    )
+https://checkout.razorpay.com/v1/checkout.js?order_id={order['id']}
+"""
 
+    await query.message.reply_text(pay_text)
+    
 @Client.on_message(filters.command("verify"))
 async def verify(client, message):
     user_id = int(message.command[1])
